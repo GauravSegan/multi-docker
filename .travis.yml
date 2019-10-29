@@ -15,16 +15,16 @@ script:
 
 ## create production builds for all others now including client
 after_success:
-  - docker build -t gauravsegan/multi-client ./client
-  - docker build -t gauravsegan/multi-nginx ./nginx
-  - docker build -t gauravsegan/multi-server ./server
-  - docker build -t gauravsegan/multi-worker ./worker
+  - docker build -t drumster88/multi-client ./client
+  - docker build -t drumster88/multi-nginx ./nginx
+  - docker build -t drumster88/multi-server ./server
+  - docker build -t drumster88/multi-worker ./worker
 
 ## login to docker hub using enviroment variables defined in travis CI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
 ## push all prod ready build images to dockerhub
-  - docker push gauravsegan/multi-client
-  - docker push gauravsegan/multi-nginx
-  - docker push gauravsegan/multi-server
-  - docker push gauravsegan/multi-worker
+  - docker push drumster88/multi-client
+  - docker push drumster88/multi-nginx
+  - docker push drumster88/multi-server
+  - docker push drumster88/multi-worker
