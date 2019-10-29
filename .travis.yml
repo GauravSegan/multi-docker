@@ -1,0 +1,30 @@
+sudo: required
+services:
+  - docker
+
+## create a build for react client for testing
+before_install:
+   - docker build -t gauravsegan/react-test -f ./client/dev.Dockerfile ./client
+   ## -t for tagging image, override filename with you dev.Dockerfile
+   ## in the end give the build context by ./client
+
+## run tests off the client build
+script:
+  - docker run gauravsegan/react-test npm test -- --coverage
+  ## -- --coverage is to make sure test script exit with a status code (either 0 or non zero)
+
+## create production builds for all others now including client
+after_success:
+  - docker build -t gauravsegan/multi-client ./client
+  - docker build -t gauravsegan/multi-nginx ./nginx
+  - docker build -t gauravsegan/multi-server ./server
+  - docker build -t gauravsegan/multi-worker ./worker
+
+## login to docker hub using enviroment variables defined in travis CI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+## push all prod ready build images to dockerhub
+  - docker push gauravsegan/multi-client
+  - docker push gauravsegan/multi-nginx
+  - docker push gauravsegan/multi-server
+  - docker push gauravsegan/multi-worker
