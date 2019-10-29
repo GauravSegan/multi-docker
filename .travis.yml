@@ -10,7 +10,7 @@ before_install:
 
 ## run tests off the client build
 script:
-  - docker run gauravsegan/react-test npm test -- --coverage
+  - docker run -e CI=true gauravsegan/react-test npm test 
   ## -- --coverage is to make sure test script exit with a status code (either 0 or non zero)
 
 ## create production builds for all others now including client
