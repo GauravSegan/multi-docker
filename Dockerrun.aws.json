@@ -1,0 +1,40 @@
+{
+    "AWSEBDockerrunVersion": 2,
+    "containerDefinitions": [
+        {
+            "name": "client",
+            "image": "drumster88/multi-client",
+            "hostname": "client",
+            "essential": false    
+        },
+
+        {
+            "name": "server",
+            "image": "drumster88/multi-server",
+            "hostname": "api",
+            "essential":false
+        },     
+
+        {
+            "name": "worker",
+            "image": "drumster88/multi-worker",
+            "hostname": "worker",
+            "essential":false
+        },
+
+        {
+            "name": "nginx",
+            "image": "drumster88/multi-nginx",
+            "hostname": "nginx",
+            "essential":true,
+            "portMappings": [
+                {
+                    "hostPort": 80,
+                    "containerPort": 80
+                }
+            ],
+        "links": ["client", "server"] 
+        
+        }
+    ]
+}

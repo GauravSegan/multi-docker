@@ -16,5 +16,5 @@ COPY --from=builder /app/build /usr/share/nginx/html
 ## we stuff into /usr/share/nginx/html all static content as per nginx image
 
 
-
+ 
 
